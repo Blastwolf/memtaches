@@ -1,0 +1,52 @@
+body,html{
+    height: 100%;
+    width: 100%;
+    background-color: bisque;
+}
+table{
+    color:white;
+    width: 80%;
+    margin:auto;
+    position:relative;
+
+}
+h1.month{
+    text-align: center;
+}
+th,td{
+    border:1px solid black;
+    min-width: 7rem;
+}
+th{
+    background-color: #607d8b;
+    height: 5rem;
+}
+td{
+    height: 9rem;
+    position:relative;
+    background-color: lightslategrey;
+}
+td:hover{
+    background-color: darkolivegreen;
+}
+span.day-number{
+    position:absolute;
+    display: block;
+    font-size: 2rem;
+    font-weight:bold;
+    top:1rem;
+    left:1rem;
+}
+span.week-number{
+    position:absolute;
+    display: block;
+    font-size: 2rem;
+    font-weight:bold;
+    top:1rem;
+    right:1rem;
+}
+
+
+footer{
+    display: block;
+}
