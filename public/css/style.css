@@ -1,52 +1,368 @@
 body,html{
     height: 100%;
     width: 100%;
+    padding:0;
+    margin:0;
     background-color: bisque;
+}
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+#calendar-component{
+    display:flex;
+    flex-wrap:wrap;
+    padding:5rem;
+    flex-shrink: 0;
+    justify-content:space-evenly;
+    width: 100%;
+}
+.calendar-container{
+   display: block;
+   min-width: 800px;
+}
+.tasks-container{
+    display: block;
+    border: 1px solid black;
+    background-color: #5c4b50;
+    min-width: 600px;
+    width: 45%;
+
+}
+.tasks-list-wrapper,.tasks-list-before-wrapper{
+    color:white;
+    text-align: center;
+    margin:2rem auto;
 }
 table{
     color:white;
-    width: 80%;
+    width: 100%;
     margin:auto;
     position:relative;
+}
+.title-wrapper{
+    position: relative;
+    display:block;
+    text-align: center;
+    height: 200px;
+    width:60%;
+    margin:auto;
+}
+div.prev-month,div.next-month{
+    cursor: pointer;
+    position: absolute;
+    display:block;
+    height: 0;
+    width: 0;
+}
+div.prev-month{
+    border-top:50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-right:50px solid #182230;
+    top:50%;
+    transform: translateY(-50%);
+}
+div.next-month{
+    border-top:50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left:50px solid #182230;
+    top:50%;
+    right:0;
+    transform: translateY(-50%);
 
 }
 h1.month{
-    text-align: center;
+    position: relative;
+    display:inline-block;
+    user-select: none;
+    margin:0;
+    top: 50%;
+    transform: translateY(-50%);
+
 }
 th,td{
     border:1px solid black;
-    min-width: 7rem;
+    width: 80px;
+    user-select: none;
+
 }
 th{
     background-color: #607d8b;
-    height: 5rem;
+    height: 3rem;
 }
 td{
-    height: 9rem;
+    height: 4rem;
     position:relative;
     background-color: lightslategrey;
+    border:10px solid transparent;
 }
 td:hover{
     background-color: darkolivegreen;
 }
+td.active{
+    border:10px solid dodgerblue;
+
+}
+td.prev,td.next{
+    color:lightslategrey;
+    background-color: #182230;
+}
+td[data-task=true]{
+    background-color: indigo;
+}
+td.period{
+    background-color: #da36bb;
+}
 span.day-number{
     position:absolute;
     display: block;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight:bold;
-    top:1rem;
-    left:1rem;
+    top:0.4rem;
+    left:0.4rem;
+}
+span.day-number{
+    user-select: none;
 }
 span.week-number{
     position:absolute;
     display: block;
-    font-size: 2rem;
-    font-weight:bold;
-    top:1rem;
-    right:1rem;
+    /*font-size: 1.5rem;*/
+    /*font-weight:bold;*/
+    /*top:1rem;*/
+    /*right:1rem;*/
 }
 
+
+li{
+    position:relative;
+    display:flex;
+    color:black;
+    user-select: none;
+    align-items: center;
+    cursor:pointer;
+    background-color: bisque;
+    border:1px solid black;
+    margin:0.5rem auto;
+    width: 95%;
+    min-height: 2rem;
+    height: auto;
+    -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+
+}
+li.task-period{
+    background-color: dodgerblue ;
+}
+p.task-text{
+    width: 80%;
+    margin:auto auto auto 0;
+}
+.datedebut,.datefin{
+    display: block;
+    color:#da36bb;
+    font-weight: bold;
+}
+span.extand-period{
+    display:block;
+    position: absolute;
+    top:50%;
+    right:10px;
+    transform: translateY(-50%);
+    float: right;
+    margin-left: 2rem;
+    border-top:10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left:20px solid #182230;
+}
+.modal-container{
+    display:none;
+}
+.modal-container.show{
+    display:block;
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: bisque;
+    padding:2rem;
+}
+label{
+    display: block;
+    margin-bottom: 0.5rem;
+}
+/*.close {*/
+    /*position: absolute;*/
+    /*right: 5%;*/
+    /*top:25%;*/
+    /*width: 1.5rem;*/
+    /*height: 1.5rem;*/
+    /*opacity: 0.3;*/
+/*}*/
+/*.close:hover {*/
+    /*opacity: 1;*/
+/*}*/
+/*.close:before, .close:after {*/
+    /*position: absolute;*/
+    /*left: 15px;*/
+    /*content: ' ';*/
+    /*height: 1rem;*/
+    /*width: 2px;*/
+    /*background-color: #333;*/
+/*}*/
+/*.close:before {*/
+    /*transform: rotate(45deg);*/
+/*}*/
+/*.close:after {*/
+    /*transform: rotate(-45deg);*/
+/*}*/
+
+
+.modal input[name="datejs"]{
+    display:block;
+
+    margin-bottom: 1rem;
+}
+.modal textarea{
+    width: 100%;
+}
 
 footer{
     display: block;
+    position: relative;
+    bottom: 0;
 }
+
+/* Style the list items */
+ul li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #eee;
+    font-size: 14px;
+    transition: 0.2s;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+    background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+    background: #888;
+    color: #fff;
+}
+
+/* Add a "checked" mark when clicked on */
+ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top:50%;
+    transform: rotate(45deg) translateY(-70%);
+
+    left: 13px;
+    height: 15px;
+    width: 7px;
+}
+
+li > p{
+    width: 50px;
+    /*background-color: black;*/
+}
+
+
+/* Style the close button */
+.close{
+    position: absolute;
+    display:flex;
+    align-items: center;
+    right: 0;
+    top:0;
+    height: 100%;
+    padding:1rem;
+}
+
+.close:hover{
+    background-color: #f44336;
+    color: white;
+}
+.edit{
+    position:relative;
+    display: flex;
+    right:50px;
+    border:1px solid black;
+    background-image: url("../images/pencil-edit-button.png");
+    width: 32px;
+    height: 32px;
+
+}
+
+
+
+/* Style the header */
+.addForm {
+    background-color: #607d8b;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+
+/* Clear floats after the header */
+.addForm:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the input */
+input.addFormInput {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button{
+    border: none;
+    outline: none;
+    font: inherit;
+    color: inherit;
+    background: none
+}
+
+.addBtn:hover {
+    background-color: #bbb;
+}
+

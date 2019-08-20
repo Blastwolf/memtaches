@@ -1,14 +1,23 @@
 <?php
+session_start();
+define('ROOTDIR','/'.basename(__DIR__).DIRECTORY_SEPARATOR);
+define ('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
+set_include_path(get_include_path().
+    PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'views'. DIRECTORY_SEPARATOR.
+    PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'models'. DIRECTORY_SEPARATOR.
+    PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'controllers'. DIRECTORY_SEPARATOR.
+    PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR.
+    PATH_SEPARATOR . ROOTPATH . 'core' . DIRECTORY_SEPARATOR
+);
+spl_autoload_register(function ($class) {
+    include $class .'.php';
+});
+
 require 'app/config/config.php';
-require 'app/controllers/Calendar_controller.php';
-require 'Router.php';
+//require 'app/controllers/Calendar_controller.php';
+//require 'Router.php';
 
 
-
-define('ROOT',dirname(__FILE__));
-//echo '<pre>';
-//var_dump($_SERVER);
-//echo '<pre>';
 
 if (!empty($_SERVER['PATH_INFO'])) {
     $path = $_SERVER['PATH_INFO'];

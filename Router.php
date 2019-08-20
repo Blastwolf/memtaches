@@ -29,23 +29,23 @@ class Router
     public function setupTheRoute()
     {
         if (file_exists('app/controllers/'.$this->getController().'.php')) {
-            $controller = $this->getController();
-            $route = new $controller;
+            $controllerName = $this->getController();
+            $controller = new $controllerName;
         } else {
             throw new Exception("Le controlleur n\'existe pas !{$this->getQuery()},{$this->getController()}");
         }
 
-        if(method_exists($route,$this->getMethod())) {
+        if(method_exists($controller,$this->getMethod())) {
 
             $method = $this->getMethod();
             if (!empty($this->getParams())) {
-                $route->$method(...$this->getParams());
+                $controller->$method(...$this->getParams());
             } else {
-                $route->$method();
+                $controller->$method();
             }
 
         }else{
-            throw new Exception('methode invalid');
+            throw new Exception('method invalid');
         }
     }
 
