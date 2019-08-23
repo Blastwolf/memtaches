@@ -5,8 +5,7 @@ class Calendar_v2 {
     }
 
     init(date) {
-        $('.calendar-container').html('');
-
+        this.calendarContainer = $('.calendar-container');
         this.now = date ? moment(date) : moment();
         this.now.locale('fr', {week: {dow: 1}});
         this.year = this.now.format('YYYY');
@@ -14,11 +13,13 @@ class Calendar_v2 {
         this.firstDayOfMonth = this.now.clone().startOf('month');
         this.lastDayOfMonth = this.now.clone().endOf('month');
         this.numberOfDaysInMonth = this.now.daysInMonth();
+
+        this.calendarContainer.html('');
         this.generateCalendarArr();
         this.outputCalendarHTML();
-        AjaxRequests.getTaskInMonth(this.now.format('YYYY-MM-DD')).then((res) => {
+
+        $.post(`${document.baseURI}Api/taskInMonth`,{date:this.now.format('YYYY-MM-DD')},(res)=> {
             this.tasks = res;
-            console.log('heloo',res);
             this.scanToAddTaskToCell(res);
         });
     }
@@ -46,13 +47,15 @@ class Calendar_v2 {
     }
 
     outputCalendarHTML() {
-        let calendarContainer = $('.calendar-container');
-        let calendarTable = calendarContainer.html(`
-            <div class="title-wrapper">
-           <div class="prev-month"></div> <h1 class="month">${this.month.toUpperCase()} ${this.year}</h1><div class="next-month"></div>
-            </div>
-            <table class="calendar-table">
+
+        let calendarTable = this.calendarContainer.html(`
+            <table class="calendar-table table table-bordered">
                 <thead>
+                <tr>
+                    <th colspan="1" class="month-selector"><span class="prev-month"></span></th>
+                    <th colspan="5" class="month">${this.month.toUpperCase()} ${this.year}</th>
+                    <th colspan="1" class="month-selector"><span class="next-month"></span></th>
+                </tr>
                 <tr>
                     <th>Lundi</th>
                     <th>Mardi</th>
@@ -68,7 +71,7 @@ class Calendar_v2 {
                 </tbody>
             </table>
         </div>`);
-        calendarTable.appendTo(calendarContainer);
+        calendarTable.appendTo(this.calendarContainer);
 
 
         let tableBody = $(`.calendar-table-body-${this.month}-${this.year}`);
@@ -77,17 +80,19 @@ class Calendar_v2 {
             let cell = $(`<td class="day" data-date="${e.format('YYYY-MM-DD')}">`);
             let cellContent = $('<span class="day-number">').text(`${e.format('DD')}`);
 
-
+            //Si le premier jours du mois ne commence pas un lundi , on ajoute la class prev
+            //pour representer les jours de la fin du mois precedent
             if ((i) < this.firstDayOfMonth.weekday()) {
                 cell.addClass('prev');
             }
+            //---> Pour les jours du mois suivant
             if (e > this.lastDayOfMonth) {
                 cell.addClass('next');
             }
 
             cellContent.appendTo(cell);
             cell.appendTo(row);
-
+            //On insert la row tous les 7 jours ou a la fin du mois
             if ((i + 1) % 7 === 0 && i !== 0 || i === this.calendar.length - 1) {
                 row.appendTo(tableBody);
                 row = $('<tr>');
@@ -96,21 +101,20 @@ class Calendar_v2 {
         });
     }
     //Ajoute une couleur au cellule qui corresponde a une tache enregistré
-    scanToAddTaskToCell(tasks) {
+    scanToAddTaskToCell(tasks,task) {
         let td = $('td');
         $.each(td, (i, e) => {
             let elem = $(e);
             let elemDate = $(e).attr('data-date');
             $.each(tasks, (i, e) => {
                 if (elemDate >= e.datedebut && elemDate <= e.datefin) {
-                    if (elem.attr('data-task') === undefined) {
+                    if (!elem.attr('data-task')) {
                         elem.attr('data-task', true);
                     }
                 }
             });
-        })
+        });
     }
-
 
     //Peuple la liste de tache du jour actuel
     showTasksForDay() {
@@ -119,13 +123,16 @@ class Calendar_v2 {
         taskList.html('');
         $.each(this.tasks,(i,e)=>{
             if(day >= e.datedebut && day <= e.datefin){
-                taskList.append(`<li data-id="${e.id}"
-                data-period="${e.datedebut}/${e.datefin}" class="task"><p class="task-text">${e.task}</p>
-                <span class="edit"></span>
-                <span class="close">&#xd7;</span>`)
+                taskList.append(`
+                <li data-id="${e.id}" data-period="${e.datedebut}/${e.datefin}" class="task">
+                    <p class="task-text">${e.task}</p> 
+                    <i class="far fa-edit edit"></i>
+                    <i class="fas fa-times close"></i>
+                </li>`)
             }
         });
-     this.removeDayTaskMarker(day);
+
+     // this.removeDayTaskMarker(day);
     }
     //Peuple la liste des tache du jour précédant
     showTasksForDayBefore(){
@@ -136,28 +143,73 @@ class Calendar_v2 {
 
         $.each(this.tasks,(i,e)=>{
             if(dayBefore >= e.datedebut && dayBefore === e.datefin){
-                taskList.append(`<li data-id="${e.id}">${e.task}<span class="extand-period"></span></li>`)
+                taskList.append(`
+                <li data-id="${e.id}" data-period="${e.datedebut}/${e.datefin}" class="task-before">
+                    <p class="task-text">${e.task}</p>
+                    <i class="fas fa-level-up-alt extand-period"></i>
+                </li>`)
             }
-        })
+        });
     }
     //Enleve la marque montrant la presence d'une tache lorsque l'on supprime tout les tache d'un jour.
     removeDayTaskMarker(day){
         let list = $('.tasks-list li');
         let markedDay =  $(`.day[data-date=${day}]`);
         if(!list.length){
-            console.log('empty shit');
             markedDay.removeAttr('data-task');
+            $('.period').toggleClass('period');
+            //Si il y a une periode en highlight , ont la retire
+        }
+    }
+
+    //Method pour enlever les marques data-task=true sur les cellules qui n'on plus de tache apres suppression d'une tache
+    //avec une periode.
+    removePeriodAndTaskMarker(task){
+        let taskElem = task;
+        if (taskElem) {
+            let taskDays = $('.day[data-task=true]');
+            let taskDebut = taskElem.datedebut;
+            let taskFin = taskElem.datefin;
+            let periodDays = [];
+            //On genere un tableau representant la periode de la tache et les cellules concerné
+            $.each(taskDays, (i, e) => {
+                if ($(e).attr('data-date') >= taskDebut && $(e).attr('data-date') <= taskFin) {
+                    periodDays.push(e);
+                }
+            });
+            //on verifie si les cellules de la periode on d'autre taches que celle supprimé.
+            let emptyDay = periodDays.filter((e) => {
+                let date = $(e).attr('data-date');
+                let taskPerDay =0;
+                $.each(this.tasks, (i, e) => {
+                    let dateDebut = e.datedebut;
+                    let dateFin = e.datefin;
+                    if (date <= dateDebut && date >= dateFin) {
+                        taskPerDay++
+                    }
+
+                });
+                //si aucune date de tache ne correspond a la date de la cellules on la met dans un tableau
+                //representant une cellule vide
+                if(!taskPerDay)return true;
+            });
+            //on retire l'attribut;
+            $.each(emptyDay,(i,e)=>{
+                if($(e).attr('data-task')){
+                    $(e).removeAttr('data-task');
+                }
+            });
         }
     }
 
     //Actualise la liste des tache pour colorer les cellules
-    updateHTML(){
-        AjaxRequests.getTaskInMonth(this.now.format('YYYY-MM-DD')).then((res) => {
-            this.tasks = res;
-            this.scanToAddTaskToCell(res);
-            this.showTasksForDay();
-        });
-    }
+    // updateHTML(){
+    //     AjaxRequests.getTaskInMonth(this.now.format('YYYY-MM-DD')).then((res) => {
+    //         this.tasks = res;
+    //         this.scanToAddTaskToCell(res);
+    //         this.showTasksForDay();
+    //     });
+    // }
 
     nextMonth() {
         this.init(this.now.add(1, 'month'));

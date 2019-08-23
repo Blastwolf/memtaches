@@ -1,5 +1,7 @@
 <?php
 
+use Dompdf\Dompdf;
+
 
 class Calendar_controller extends Controller
 {
@@ -21,14 +23,25 @@ class Calendar_controller extends Controller
     }
 
     public function searchPeriod(){
+
+
         if(isset($_POST['datedebut']) && isset($_POST['datefin'])){
+            $dompdf = new Dompdf();
 
             $tasks= $this->_calendar_model->searchPeriod($_POST);
         }
+
         $data['tasks'] = $tasks;
         $data['view'] = "components/export/export.php";
-
+        ob_start();
         $this->render('templates/template.php',$data);
+        $content = ob_get_clean();
+        $dompdf->loadHtml($content);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        $dompdf->stream();
+
     }
 
 }

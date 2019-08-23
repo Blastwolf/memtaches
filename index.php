@@ -14,6 +14,7 @@ spl_autoload_register(function ($class) {
 });
 
 require 'app/config/config.php';
+require 'vendor/autoload.php';
 //require 'app/controllers/Calendar_controller.php';
 //require 'Router.php';
 

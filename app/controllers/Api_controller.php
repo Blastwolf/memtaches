@@ -11,8 +11,9 @@ class Api_controller{
     public function insertTask(){
         if(!empty($_POST)){
             if($this->_calendar_model->addTask($_POST))
+                $tasks =$this->_calendar_model->taskInMonth($_POST['date']);
                 header('Content-Type: application/json');
-                echo json_encode($_POST);
+                echo json_encode($tasks);
 
         }
     }
@@ -38,6 +39,13 @@ class Api_controller{
             $task = $this->_calendar_model->deleteTask($_POST['id']);
             header('Content-Type: application/json');
             echo json_encode($task);
+        }
+    }
+    public function editTask(){
+        if(isset($_POST['id']) && isset($_POST['task'])){
+            $task=  $this->_calendar_model->editTask($_POST);
+            header('Content-Type: application/json');
+            echo json_encode('efzefzefzef');
         }
     }
 

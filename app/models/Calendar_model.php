@@ -60,4 +60,13 @@ class Calendar_model{
         $result = $query->fetchAll();
         return $result;
     }
+
+    public function editTask($data){
+        $query = $this->_db->prepare("UPDATE calendar_tasks SET task = :task WHERE id = :id");
+
+      $query->bindParam(':task',$data['task']);
+       $query->bindParam(':id',$data['id']);
+
+        return $query->execute();
+    }
 }
