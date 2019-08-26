@@ -85,7 +85,6 @@ class AjaxRequests {
 
                             this.calendar.showTasksForDay();
                             this.calendar.showTasksForDayBefore();
-                            $('.period').toggleClass('period');
                             this.calendar.removePeriodAndTaskMarker(task);
 
                         }

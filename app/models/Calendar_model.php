@@ -50,8 +50,7 @@ class Calendar_model{
     }
 
     public function searchPeriod($date){
-        $query = $this->_db->prepare("SELECT * FROM calendar_tasks WHERE datedebut >= :datedebut AND datedebut <= :datefin ORDER BY datedebut");
-//        $query = $this->_db->prepare("SELECT * FROM calendar_tasks WHERE datedebut BETWEEN :datedebut AND :datefin");
+        $query = $this->_db->prepare("SELECT * FROM calendar_tasks WHERE datedebut BETWEEN :datedebut AND :datefin ORDER BY datedebut");
         $query->bindParam(':datedebut',$date['datedebut']);
         $query->bindParam(':datefin',$date['datefin']);
 

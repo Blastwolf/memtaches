@@ -8,13 +8,15 @@ class Api_controller{
     }
 
 
-    public function insertTask(){
-        if(!empty($_POST)){
-            if($this->_calendar_model->addTask($_POST))
-                $tasks =$this->_calendar_model->taskInMonth($_POST['date']);
+    public function insertTask()
+    {
+        if (!empty($_POST) ) {
+
+            if ($this->_calendar_model->addTask($_POST)) {
+                $tasks = $this->_calendar_model->taskInMonth($_POST['date']);
                 header('Content-Type: application/json');
                 echo json_encode($tasks);
-
+            }
         }
     }
 

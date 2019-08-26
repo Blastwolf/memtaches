@@ -184,7 +184,7 @@ class Calendar_v2 {
                 $.each(this.tasks, (i, e) => {
                     let dateDebut = e.datedebut;
                     let dateFin = e.datefin;
-                    if (date <= dateDebut && date >= dateFin) {
+                    if (date >= dateDebut && date <= dateFin) {
                         taskPerDay++
                     }
 
@@ -199,6 +199,7 @@ class Calendar_v2 {
                     $(e).removeAttr('data-task');
                 }
             });
+            $('.period').toggleClass('period');
         }
     }
 

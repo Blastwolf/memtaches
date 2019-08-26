@@ -1,0 +1,50 @@
+body{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+h1{
+    text-align: center;
+}
+.task-container{
+    border:1px solid black;
+    padding:10px;
+    margin-bottom:12px;
+    position:relative;
+}
+.progress-container{
+    height:19px;
+    width: 100%;
+    position: relative;
+    background-color: gainsboro;
+
+}
+p{
+    margin:0;
+    padding:0;
+}
+.progress-bar{
+    height:18px;
+    background-color: lightslategrey;
+    width:70%;
+    text-align: right;
+    line-height: 16px;
+}
+.days{
+    margin-right: 7px;
+    font-weight: bold;
+    color:white;
+}
+.datedebut,.datefin{
+    display:inline-block;
+    color:grey;
+}
+.datedebut{
+    left:0;
+    width:200px;
+
+}
+.datefin{
+    float:right;
+}
