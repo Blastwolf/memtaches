@@ -12,6 +12,7 @@ h1{
     padding:10px;
     margin-bottom:12px;
     position:relative;
+    page-break-inside: avoid;
 }
 .progress-container{
     height:19px;
