@@ -6,8 +6,8 @@ class Calendar_v2 {
 
     init(date) {
         this.calendarContainer = $('.calendar-container');
+        moment.updateLocale('fr',{week:{dow:0}});
         this.now = date ? moment(date) : moment();
-        this.now.locale('fr', {week: {dow: 1}});
         this.year = this.now.format('YYYY');
         this.month = this.now.format('MMMM');
         this.firstDayOfMonth = this.now.clone().startOf('month');
@@ -57,13 +57,14 @@ class Calendar_v2 {
                     <th colspan="1" class="month-selector"><span class="next-month"></span></th>
                 </tr>
                 <tr>
+                    <th>Dimanche</th>
                     <th>Lundi</th>
                     <th>Mardi</th>
                     <th>Mercredi</th>
                     <th>Jeudi</th>
                     <th>Vendredi</th>
-                    <th>Samedi</th>
-                    <th>Dimanche</th>
+                                        <th>Samedi</th>
+
                 </tr>
                 </thead>
                 <tbody class="calendar-table-body-${this.month}-${this.year}">
