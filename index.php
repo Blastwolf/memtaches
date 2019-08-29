@@ -1,7 +1,10 @@
 <?php
 session_start();
-define('ROOTDIR','/'.basename(__DIR__).DIRECTORY_SEPARATOR);
+if($_SERVER['HTTP_HOST'] == 'localhost'){
+    define('ROOTDIR','/'.basename(__DIR__).DIRECTORY_SEPARATOR);
+}
 define ('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
+
 set_include_path(get_include_path().
     PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'views'. DIRECTORY_SEPARATOR.
     PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'models'. DIRECTORY_SEPARATOR.

@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS calendar_tasks (
   datedebut date NULL,
   datefin date NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=uft8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
