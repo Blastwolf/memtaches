@@ -64,8 +64,16 @@ class Calendar_model{
         $query = $this->_db->prepare("UPDATE calendar_tasks SET task = :task WHERE id = :id");
 
       $query->bindParam(':task',$data['task']);
-       $query->bindParam(':id',$data['id']);
+      $query->bindParam(':id',$data['id']);
 
         return $query->execute();
+    }
+    public function reducTaskPeriod($date,$id){
+        $query = $this->_db->prepare("UPDATE calendar_tasks SET datefin = :date WHERE id = :id AND datedebut < datefin");
+        $query->bindParam(':date',$date);
+        $query->bindParam(':id',$id);
+
+        return $query->execute();
+
     }
 }

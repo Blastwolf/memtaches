@@ -122,11 +122,15 @@ class Calendar_v2 {
         let day = $('.active').attr('data-date');
         let taskList=$('.tasks-list');
         taskList.html('');
+
         $.each(this.tasks,(i,e)=>{
             if(day >= e.datedebut && day <= e.datefin){
-                taskList.append(`
+                let reducTaskArrow = (day === e.datedebut) ? '':'<i class="fas fa-level-down-alt reduc-period"></i>';
+
+                    taskList.append(`
                 <li data-id="${e.id}" data-period="${e.datedebut}/${e.datefin}" class="task">
                     <p class="task-text">${e.task}</p> 
+                    ${reducTaskArrow}
                     <i class="far fa-edit edit"></i>
                     <i class="fas fa-times close"></i>
                 </li>`)

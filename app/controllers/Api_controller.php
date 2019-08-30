@@ -50,7 +50,13 @@ class Api_controller{
             echo json_encode('efzefzefzef');
         }
     }
-
-
+    public function reducTaskPeriod()
+    {
+        if (isset($_POST['reducDate'])) {
+            $task = $this->_calendar_model->reducTaskPeriod($_POST['reducDate'], $_POST['id']);
+            header('Content-Type: application/json');
+            echo json_encode($task.'ma bite');
+        }
+    }
 
 }

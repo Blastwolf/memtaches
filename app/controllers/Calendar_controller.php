@@ -39,6 +39,7 @@ class Calendar_controller extends Controller
             include "components/export/export.php";
             $content = ob_get_clean();
             $dompdf->loadHtml($content);
+            $dompdf->setPaper('A4','portrait');
             $dompdf->render();
             $dompdf->stream("export_{$dateDebut}_{$dateFin}.pdf",['Attachment'=>false]);
         }

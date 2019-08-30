@@ -1,26 +1,29 @@
+@page{
+    margin:0px auto 0px;
+}
 body{
     height: 100%;
     width: 100%;
     margin:0;
-    padding:0;
-    padding-bottom: 200px;
+    box-sizing:border-box;
 }
 h1{
     text-align: center;
+}
+tr{
+    page-break-inside: avoid;
 }
 .task-container{
     border:1px solid black;
     padding:10px;
     margin-bottom:12px;
     position:relative;
-    page-break-inside: avoid;
 }
 .progress-container{
     height:19px;
     width: 100%;
     position: relative;
     background-color: gainsboro;
-
 }
 p{
     margin:0;
@@ -50,3 +53,4 @@ p{
 .datefin{
     float:right;
 }
+

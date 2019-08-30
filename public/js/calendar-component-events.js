@@ -57,7 +57,10 @@ class CalendarComponentEvents{
                     $('.period').toggleClass('period');
 
                 } else {
-                    $(td).toggleClass('active')
+                    $(td).toggleClass('active');
+                    $('.tasks-list').html('');
+                    $('.tasks-list-before').html('');
+                    $('.period').toggleClass('period');
                 }
 
                 let date = $(e.target).attr('data-date') || $(e.target).parent().attr('data-date');

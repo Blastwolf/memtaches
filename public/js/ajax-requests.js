@@ -12,7 +12,7 @@ class AjaxRequests {
         this.createUpdateDatePerdiodEvent();
         this.createDeleteTaskEvent();
         this.createEditTaskEvent();
-
+        this.createReducPeriodEvent();
 
     }
 
@@ -24,7 +24,6 @@ class AjaxRequests {
             $.post(`${this.root}Api/insertTask`, {date, task}, (res) => {
                 // this.calendar.updateHTML(res.date);
                 this.updateHTML(res);
-                console.log(res,'new list of task bitches');
                 this.form.find('#task').val('');
             })
         })
@@ -46,7 +45,6 @@ class AjaxRequests {
                     if (res) {
                         // console.log(this.calendar.tasks.indexOf(id),this.calendar.tasks);
                         this.calendar.tasks.find((elem, i, arr) => {
-                            console.log(elem, elem.id, id);
                             //update the calendar tasks array
                             if (elem.id === id) {
                                 this.calendar.tasks[i].datefin = date;
@@ -62,31 +60,52 @@ class AjaxRequests {
         });
     }
 
+    createReducPeriodEvent(){
+            this.taskList.on('click','.reduc-period',(e)=>{
+                let date = $('.active').attr('data-date');
+                let reducDate = moment(date).subtract(1,'days').format('YYYY-MM-DD');
+                let id = $(e.target).parent().attr('data-id');
+                $.post(`${this.root}Api/reducTaskPeriod`, {id, reducDate}, (res,err) => {
+                    if (res) {
+                        // console.log(this.calendar.tasks.indexOf(id),this.calendar.tasks);
+                        let task={};
+                        this.calendar.tasks.find((elem, i, arr) => {
+                            //update the calendar tasks array
+                            if (elem.id === id) {
+                                if(this.calendar.tasks[i].datefin > this.calendar.tasks[i].datedebut){
+                                    task = JSON.parse(JSON.stringify(this.calendar.tasks[i]));
+                                    this.calendar.tasks[i].datefin = reducDate;
+                                }
+                            }
+                            //update the html
+                            this.calendar.showTasksForDay();
+                            this.calendar.showTasksForDayBefore();
+                            this.calendar.removePeriodAndTaskMarker(task);
+
+                        })
+                    }
+                })
+            })
+    }
+
     createDeleteTaskEvent() {
         this.taskList.on('click', (e) => {
             if (e.target.classList.contains('close')) {
                 if (confirm('Voulez vous vraiment supprimer cette tache ?!')) {
                     let id = $(e.target).parent().attr('data-id');
                     let task = this.calendar.tasks.find(task => task.id === id);
-                    console.log(id,task,this.calendar.tasks);
                     $.post(`${this.root}Api/deleteTask`, {id}, (res) => {
                         if (res) {
-                            console.log('voila la reponse',res);
 
                             this.calendar.tasks.forEach((elem, i, arr) => {
                                 //update the calendar tasks array
                                 if (elem.id === id) {
-                                    console.log('removing',elem.id, id,i);
                                     arr.splice(i, 1);
                                 }
                             });
-
-                            console.log('after remove',this.calendar.tasks);
-
                             this.calendar.showTasksForDay();
                             this.calendar.showTasksForDayBefore();
                             this.calendar.removePeriodAndTaskMarker(task);
-
                         }
                     })
                 }
