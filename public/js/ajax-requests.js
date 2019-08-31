@@ -73,7 +73,7 @@ class AjaxRequests {
                             //update the calendar tasks array
                             if (elem.id === id) {
                                 if(this.calendar.tasks[i].datefin > this.calendar.tasks[i].datedebut){
-                                    task = JSON.parse(JSON.stringify(this.calendar.tasks[i]));
+                                    task = JSON.parse(JSON.stringify(this.calendar.tasks[i]));//DEEP copy de l'objet(task)
                                     this.calendar.tasks[i].datefin = reducDate;
                                 }
                             }
