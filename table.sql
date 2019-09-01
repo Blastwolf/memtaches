@@ -9,3 +9,7 @@ CREATE TABLE IF NOT EXISTS calendar_tasks (
   datefin date NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE calendar_tasks
+  ADD COLUMN app VARCHAR (255) NULL AFTER task,
+  ADD COLUMN type VARCHAR (255) NULL AFTER app
