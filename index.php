@@ -10,6 +10,7 @@ set_include_path(get_include_path().
     PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'models'. DIRECTORY_SEPARATOR.
     PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'controllers'. DIRECTORY_SEPARATOR.
     PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR.
+    PATH_SEPARATOR . ROOTPATH . 'app' . DIRECTORY_SEPARATOR . 'helpers'. DIRECTORY_SEPARATOR.
     PATH_SEPARATOR . ROOTPATH . 'core' . DIRECTORY_SEPARATOR
 );
 spl_autoload_register(function ($class) {

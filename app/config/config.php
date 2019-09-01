@@ -8,6 +8,4 @@ $default_controller = "Calendar_controller";
 
 
 
-
-
 define("DEFAULT_CONTROLLER",$default_controller);

@@ -65,17 +65,12 @@ td[data-task=true]{
 td.period{
     background-color: #b8daff;
 }
-p.task-text{
-    /*width: 80%;*/
-    /*margin:auto auto auto 0;*/
-    flex:1;
-    margin:0;
-}
+
 /* Style the list items */
 ul li {
     cursor: pointer;
     position: relative;
-    padding: 5px 8px 5px 40px;
+    padding: 15px 8px 5px 40px;
     background: #eee;
     font-size: 14px;
     transition: 0.2s;
@@ -120,6 +115,16 @@ ul li.checked::before {
     left: 8px;
     height: 15px;
     width: 7px;
+}
+div.task-app-and-type-wrapper{
+    position:absolute;
+    color: #0069d9;
+    top:-2px;
+    left:40px;
+}
+p.task-text{
+    flex:1;
+    margin:0;
 }
 i{
     display:flex;

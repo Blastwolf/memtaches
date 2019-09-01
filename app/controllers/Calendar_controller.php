@@ -1,5 +1,4 @@
 <?php
-
 use Dompdf\Dompdf;
 
 class Calendar_controller extends Controller
@@ -8,8 +7,10 @@ class Calendar_controller extends Controller
 
     public function __construct()
     {
-
         $this->_calendar_model = new Calendar_model();
+        include 'calendar/calendar_helper.php';
+        include 'export/export_helper.php';
+
     }
 
     public function index()

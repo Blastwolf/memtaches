@@ -22,10 +22,15 @@
 
 
         <form id="form" class="addForm border p-4" method="post">
-            <div class="form-row mb-2">
-                <div class="col-3">
+            <div class="form-row align-item-center">
+                <div class="col-3 my-2">
                     <input name="date" id="date" type="date" disabled class="addFormInput form-control" value="" required>
                 </div>
+
+                <?= generateAppSelectInput() ?>
+
+          <?= generateTypeSelectInput() ?>
+
             </div>
             <div class="form-row align-item-center">
                 <div class="col-10">

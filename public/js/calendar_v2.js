@@ -129,10 +129,12 @@ class Calendar_v2 {
 
                     taskList.append(`
                 <li data-id="${e.id}" data-period="${e.datedebut}/${e.datefin}" class="task">
+                    <div class="task-app-and-type-wrapper"><small>${e.app}</small>/<small>${e.type}</small></div>
                     <p class="task-text">${e.task}</p> 
                     ${reducTaskArrow}
                     <i class="far fa-edit edit"></i>
                     <i class="fas fa-times close"></i>
+                 
                 </li>`)
             }
         });

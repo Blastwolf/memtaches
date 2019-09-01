@@ -14,8 +14,10 @@ class Calendar_model{
     public function addTask(array $data){
 
 
-        $query = $this->_db->prepare("INSERT INTO calendar_tasks (datedebut, task ,datefin) VALUES(:datedebut, :task, :datefin)");
+        $query = $this->_db->prepare("INSERT INTO calendar_tasks (datedebut,app,type,task,datefin) VALUES(:datedebut,:app,:type, :task, :datefin)");
         $query->bindParam(':datedebut',$data['date']);
+        $query->bindParam(':app',$data['app']);
+        $query->bindParam(':type',$data['type']);
         $query->bindParam(':datefin',$data['date']);
         $query->bindParam(':task',$data['task']);
 

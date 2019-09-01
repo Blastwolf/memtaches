@@ -21,10 +21,15 @@ class AjaxRequests {
             e.preventDefault();
             let date = this.form.find('#date').val();
             let task = this.form.find('#task').val();
-            $.post(`${this.root}Api/insertTask`, {date, task}, (res) => {
+            let app=    this.form.find('#app').val();
+            let type=this.form.find('#type').val();
+            console.log('value of form',date,task,app,type);
+            $.post(`${this.root}Api/insertTask`, {date, app,type,task}, (res) => {
                 // this.calendar.updateHTML(res.date);
                 this.updateHTML(res);
                 this.form.find('#task').val('');
+                this.form.find('#app').val('');
+                this.form.find('#type').val('');
             })
         })
     }
