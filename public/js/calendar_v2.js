@@ -108,7 +108,8 @@ class Calendar_v2 {
             let elem = $(e);
             let elemDate = $(e).attr('data-date');
             $.each(tasks, (i, e) => {
-                if (elemDate >= e.datedebut && elemDate <= e.datefin) {
+                console.log(moment(elemDate).weekday());
+                if (elemDate >= e.datedebut && elemDate <= e.datefin && (moment(elemDate).weekday()!== 0 && moment(elemDate).weekday()!==6)) {
                     if (!elem.attr('data-task')) {
                         elem.attr('data-task', true);
                     }
@@ -120,6 +121,7 @@ class Calendar_v2 {
     //Peuple la liste de tache du jour actuel
     showTasksForDay() {
         let day = $('.active').attr('data-date');
+
         let taskList=$('.tasks-list');
         taskList.html('');
 
@@ -144,7 +146,11 @@ class Calendar_v2 {
     //Peuple la liste des tache du jour précédant
     showTasksForDayBefore(){
         let day = $('.active').attr('data-date');
-        let dayBefore = moment(day).subtract(1,'d').format('YYYY-MM-DD');
+
+        // let dayBefore = moment(day).subtract(1,'d').format('YYYY-MM-DD');
+        let dayBefore = moment(day).weekday() === 1 ? moment(day).subtract(3,'d').format('YYYY-MM-DD') :
+                                                        moment(day).subtract(1,'d').format('YYYY-MM-DD');
+
         let taskList=$('.tasks-list-before');
         taskList.html('');
 
@@ -152,6 +158,7 @@ class Calendar_v2 {
             if(dayBefore >= e.datedebut && dayBefore === e.datefin){
                 taskList.append(`
                 <li data-id="${e.id}" data-period="${e.datedebut}/${e.datefin}" class="task-before">
+                    <div class="task-app-and-type-wrapper"><small>${e.app}</small>/<small>${e.type}</small></div>
                     <p class="task-text">${e.task}</p>
                     <i class="fas fa-level-up-alt extand-period"></i>
                 </li>`)

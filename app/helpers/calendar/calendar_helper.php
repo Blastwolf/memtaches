@@ -1,12 +1,12 @@
 <?php
 
-define('APPNAMES',['Dreamer','Domino','Bridge','Prev+']);
-define('TYPENAMES',['Développement'=>'blue','Anomalie'=>'red',
-        'Hors périmètre'=>'orange','Pédagogie'=>'#d8db0a']);
+//define('APPNAMES',['Dreamer','Domino','Bridge','Prev+']);
+//define('TYPENAMES',['Développement'=>'blue','Anomalie'=>'red',
+//        'Hors périmètre'=>'orange','Pédagogie'=>'purple']);
 
 
 function generateAppSelectInput(){
-    $appArr = APPNAMES;
+    $appArr = $GLOBALS['APPNAMES'];
 
     $selectHtml = ' <select class="col-3 form-control m-2" name="app" id="app" required>
                         <option value="">Choississez une app</option>';
@@ -19,7 +19,7 @@ function generateAppSelectInput(){
 }
 
 function generateTypeSelectInput(){
-    $typeArr =TYPENAMES;
+    $typeArr = $GLOBALS['TYPENAMES'];
 
     $selectHtml = ' <select class="col-3 form-control m-2" name="type" id="type" required>
                         <option value="">Choississez un type</option>';

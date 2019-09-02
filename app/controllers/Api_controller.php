@@ -21,11 +21,11 @@ class Api_controller{
     }
 
     public function taskInMonth(){
-        if(isset($_POST['date'])){
-            $tasks = $this->_calendar_model->taskInMonth($_POST['date']);
+//        if(isset($_POST['date'])){
+            $tasks = $this->_calendar_model->taskInMonth('2019-09-02');
             header('Content-Type: application/json');
             echo json_encode($tasks);
-        }
+//        }
     }
 
     public function extandDatePeriod(){

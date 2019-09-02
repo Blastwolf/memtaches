@@ -46,12 +46,17 @@ class AjaxRequests {
                 let date = $('.active').attr('data-date');
                 let id = $(e.target).parent().attr('data-id');
 
+                if(moment(date).weekday() === 6){
+                    date = moment(date).add(2,'days').format('YYYY-MM-DD');
+                }
+
                 $.post(`${this.root}Api/extandDatePeriod`, {id, date}, (res) => {
                     if (res) {
                         // console.log(this.calendar.tasks.indexOf(id),this.calendar.tasks);
                         this.calendar.tasks.find((elem, i, arr) => {
                             //update the calendar tasks array
                             if (elem.id === id) {
+
                                 this.calendar.tasks[i].datefin = date;
                             }
                             //update the html
@@ -70,26 +75,29 @@ class AjaxRequests {
                 let date = $('.active').attr('data-date');
                 let reducDate = moment(date).subtract(1,'days').format('YYYY-MM-DD');
                 let id = $(e.target).parent().attr('data-id');
-                $.post(`${this.root}Api/reducTaskPeriod`, {id, reducDate}, (res,err) => {
-                    if (res) {
-                        // console.log(this.calendar.tasks.indexOf(id),this.calendar.tasks);
-                        let task={};
-                        this.calendar.tasks.find((elem, i, arr) => {
-                            //update the calendar tasks array
-                            if (elem.id === id) {
-                                if(this.calendar.tasks[i].datefin > this.calendar.tasks[i].datedebut){
-                                    task = JSON.parse(JSON.stringify(this.calendar.tasks[i]));//DEEP copy de l'objet(task)
-                                    this.calendar.tasks[i].datefin = reducDate;
-                                }
-                            }
-                            //update the html
-                            this.calendar.showTasksForDay();
-                            this.calendar.showTasksForDayBefore();
-                            this.calendar.removePeriodAndTaskMarker(task);
 
-                        })
-                    }
-                })
+                if(confirm('Voulez-vous vraiment reduire la période de cette tache ?!')){
+                    $.post(`${this.root}Api/reducTaskPeriod`, {id, reducDate}, (res,err) => {
+                        if (res) {
+                            // console.log(this.calendar.tasks.indexOf(id),this.calendar.tasks);
+                            let task={};
+                            this.calendar.tasks.find((elem, i, arr) => {
+                                //update the calendar tasks array
+                                if (elem.id === id) {
+                                    if(this.calendar.tasks[i].datefin > this.calendar.tasks[i].datedebut){
+                                        task = JSON.parse(JSON.stringify(this.calendar.tasks[i]));//DEEP copy de l'objet(task)
+                                        this.calendar.tasks[i].datefin = reducDate;
+                                    }
+                                }
+                                //update the html
+                                this.calendar.showTasksForDay();
+                                this.calendar.showTasksForDayBefore();
+                                this.calendar.removePeriodAndTaskMarker(task);
+
+                            })
+                        }
+                    })
+                }
             })
     }
 
@@ -128,6 +136,7 @@ class AjaxRequests {
                 $(p).attr('contenteditable', true);
                 let id = $(e.target).parent().attr('data-id');
 
+                $(li).find('.reduc-period').attr('hidden', true);
                 $(li).find('.edit').attr('hidden', true);
                 $(li).find('.close').attr('hidden', true);
 

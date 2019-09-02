@@ -6,7 +6,7 @@ class Calendar_model{
 
     public function __construct()
     {
-            $this->_db = new PDO("mysql:host=localhost;dbname=calendar","root","");
+            $this->_db = new PDO("mysql:host=localhost;dbname=calendar;charset=utf8","root","");
             $this->_db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_ASSOC);
     }
 

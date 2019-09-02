@@ -7,6 +7,10 @@ class Calendar_controller extends Controller
 
     public function __construct()
     {
+        $GLOBALS['APPNAMES'] = ['Dreamer','Domino','Bridge','Prev+'];
+        $GLOBALS['TYPENAMES'] = ['Développement'=>'blue','Anomalie'=>'red',
+            'Hors périmètre'=>'orange','Pédagogie'=>'purple'];
+
         $this->_calendar_model = new Calendar_model();
         include 'calendar/calendar_helper.php';
         include 'export/export_helper.php';
@@ -15,13 +19,10 @@ class Calendar_controller extends Controller
 
     public function index()
     {
-
-
         $data['date'] = date('Y-m-d');
         $data['view'] = "components/calendar/calendar.php";
 
         $this->render('templates/template.php', $data);
-
     }
 
     public function searchPeriod()
