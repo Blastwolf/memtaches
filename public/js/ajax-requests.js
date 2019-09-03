@@ -154,7 +154,6 @@ class AjaxRequests {
                 let editedType = editType.val();
                 $.post(`${this.root}Api/editTask`, {id, editedTask, editedApp, editedType}, (res) => {
                     if (res) {
-                        console.log('multiple response ??');
                         this.calendar.tasks.forEach((elem, i, arr) => {
                             //update the calendar tasks array
                             if (elem.id === id) {
@@ -168,7 +167,6 @@ class AjaxRequests {
                         editTask.val('');
                         editApp.val('');
                         editType.val('');
-                        console.log(editTask.val(),editApp.val());
                         this.calendar.showTasksForDay();
                         this.calendar.showTasksForDayBefore();
                     }
