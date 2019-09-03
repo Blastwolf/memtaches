@@ -63,9 +63,11 @@ class Calendar_model{
     }
 
     public function editTask($data){
-        $query = $this->_db->prepare("UPDATE calendar_tasks SET task = :task WHERE id = :id");
+        $query = $this->_db->prepare("UPDATE calendar_tasks SET task = :editedTask , app = :editedApp , type = :editedType WHERE id = :id");
 
-      $query->bindParam(':task',$data['task']);
+      $query->bindParam(':editedTask',$data['editedTask']);
+      $query->bindParam(':editedApp',$data['editedApp']);
+      $query->bindParam(':editedType',$data['editedType']);
       $query->bindParam(':id',$data['id']);
 
         return $query->execute();

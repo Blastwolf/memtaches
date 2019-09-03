@@ -23,6 +23,7 @@
     </footer>
 </div>
 <script src="public/js/jquery.js"></script>
+<script src="public/js/bootstrap.js"></script>
 <script src="public/js/moment-with-locales.js"></script>
 <script src="public/js/calendar_v2.js"></script>
 <script src="public/js/ajax-requests.js"></script>

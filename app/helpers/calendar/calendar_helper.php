@@ -5,26 +5,27 @@
 //        'Hors périmètre'=>'orange','Pédagogie'=>'purple']);
 
 
-function generateAppSelectInput(){
+function generateAppSelectInput()
+{
     $appArr = $GLOBALS['APPNAMES'];
 
-    $selectHtml = ' <select class="col-3 form-control m-2" name="app" id="app" required>
-                        <option value="">Choississez une app</option>';
-    foreach($appArr as $app){
-        $selectHtml .= '<option value="'.$app.'">'.$app.'</option>';
+
+    $selectHtml = '<option value="">Choississez une app</option>';
+    foreach ($appArr as $app) {
+        $selectHtml .= '<option value="' . $app . '">' . $app . '</option>';
     }
     $selectHtml .= '</select>';
 
     return $selectHtml;
 }
 
-function generateTypeSelectInput(){
+function generateTypeSelectInput()
+{
     $typeArr = $GLOBALS['TYPENAMES'];
 
-    $selectHtml = ' <select class="col-3 form-control m-2" name="type" id="type" required>
-                        <option value="">Choississez un type</option>';
-    foreach($typeArr as $type => $color){
-        $selectHtml .= '<option value="'.$type.'">'.$type.'</option>';
+    $selectHtml = '<option value="">Choississez un type</option>';
+    foreach ($typeArr as $type => $color) {
+        $selectHtml .= '<option value="' . $type . '">' . $type . '</option>';
     }
     $selectHtml .= '</select>';
 

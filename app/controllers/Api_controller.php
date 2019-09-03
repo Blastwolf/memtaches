@@ -44,7 +44,7 @@ class Api_controller{
         }
     }
     public function editTask(){
-        if(isset($_POST['id']) && isset($_POST['task'])){
+        if(isset($_POST['id']) && isset($_POST['editedTask'])){
             $task=  $this->_calendar_model->editTask($_POST);
             header('Content-Type: application/json');
             echo json_encode('efzefzefzef');
