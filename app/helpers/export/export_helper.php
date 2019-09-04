@@ -1,5 +1,5 @@
 <?php
-function progressBarBackgroundColor(string $typetask)
+function progressBarBackgroundColor($typetask)
 {
         if($GLOBALS['TYPENAMES']){
             foreach($GLOBALS['TYPENAMES'] as $type=>$color){

@@ -16,7 +16,7 @@
         <tr>
             <td>
                 <div class="task-container">
-                    <h4 class="task-app"><?= $task['app']?></h4>
+                    <h4 class="task-app"><?= $task['app'].' / '.$task['type']?></h4>
 
                     <div class="progress-container">
                         <div class="progress-bar" data-app="<?= $task['type'] ?>" style="width:<?= $task['%'] ?>%;background-color: <?= progressBarBackgroundColor($task['type'])?>"><span class="days"><?= $task['nOfDays'] ?>j</span></div>
