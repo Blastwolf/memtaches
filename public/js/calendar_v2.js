@@ -139,14 +139,11 @@ class Calendar_v2 {
                 </li>`)
             }
         });
-
-     // this.removeDayTaskMarker(day);
     }
     //Peuple la liste des tache du jour précédant
     showTasksForDayBefore(){
         let day = $('.active').attr('data-date');
 
-        // let dayBefore = moment(day).subtract(1,'d').format('YYYY-MM-DD');
         let dayBefore = moment(day).weekday() === 1 ? moment(day).subtract(3,'d').format('YYYY-MM-DD') :
                                                         moment(day).subtract(1,'d').format('YYYY-MM-DD');
 
@@ -163,16 +160,6 @@ class Calendar_v2 {
                 </li>`)
             }
         });
-    }
-    //Enleve la marque montrant la presence d'une tache lorsque l'on supprime tout les tache d'un jour.
-    removeDayTaskMarker(day){
-        let list = $('.tasks-list li');
-        let markedDay =  $(`.day[data-date=${day}]`);
-        if(!list.length){
-            markedDay.removeAttr('data-task');
-            $('.period').toggleClass('period');
-            //Si il y a une periode en highlight , ont la retire
-        }
     }
 
     //Method pour enlever les marques data-task=true sur les cellules qui n'on plus de tache apres suppression d'une tache
@@ -215,15 +202,6 @@ class Calendar_v2 {
             $('.period').toggleClass('period');
         }
     }
-
-    //Actualise la liste des tache pour colorer les cellules
-    // updateHTML(){
-    //     AjaxRequests.getTaskInMonth(this.now.format('YYYY-MM-DD')).then((res) => {
-    //         this.tasks = res;
-    //         this.scanToAddTaskToCell(res);
-    //         this.showTasksForDay();
-    //     });
-    // }
 
     nextMonth() {
         this.init(this.now.add(1, 'month'));

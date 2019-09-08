@@ -107,6 +107,5 @@ class CalendarComponentEvents {
             $(modal).modal('show');
         }
 
-
     }
 }
